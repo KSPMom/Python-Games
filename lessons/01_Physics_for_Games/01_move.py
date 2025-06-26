@@ -59,8 +59,8 @@ def main():
             square_y += SQUARE_SPEED
 
         # Prevent the square from going off the screen
-        square_x = max(0, min(SCREEN_WIDTH - SQUARE_SIZE, square_x))
-        square_y = max(0, min(SCREEN_HEIGHT - SQUARE_SIZE, square_y))
+        square_x = max(25, min(575, square_x))
+        square_y = max(25, min(575, square_y))
 
         # This will clear the screen by filling it 
         # with the background color. If we didn't do this, 
@@ -68,7 +68,7 @@ def main():
         screen.fill(BACKGROUND_COLOR)
 
         # Draw the square
-        pygame.draw.rect(screen, SQUARE_COLOR, (square_x, square_y, SQUARE_SIZE, SQUARE_SIZE))
+        pygame.draw.circle(screen, SQUARE_COLOR, (square_x, square_y), SQUARE_SIZE/2)
 
         # Update the display. Imagine that the screen is two different whiteboards. One
         # whiteboard is currently visible to the player, and the other whiteboard is being
