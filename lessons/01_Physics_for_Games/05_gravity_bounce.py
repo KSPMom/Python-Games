@@ -52,17 +52,42 @@ while running:
             running = False
 
     # Continuously jump. If the player is not jumping, make it jump
-    if is_jumping is False:
-        # Jumping means that the player is going up. The top of the 
-        # screen is y=0, and the bottom is y=settings.screen_height. So, to go up,
-        # we need to have a negative y velocity
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_SPACE]:
+        if is_jumping is False:
+            # Jumping means that the player is going up. The top of the 
+            # screen is y=0, and the bottom is y=settings.screen_height. So, to go up,
+            # we need to have a negative y velocity
+            x_direction = 0
+            player_y_velocity = -settings.jump_y_velocity
+            player_x_velocity = settings.jump_x_velocity * x_direction
         
-        player_y_velocity = -settings.jump_y_velocity
-        player_x_velocity = settings.jump_x_velocity * x_direction
+            is_jumping = True
+
+    if keys[pygame.K_a]:
+        if is_jumping is False:
+            # Jumping means that the player is going up. The top of the 
+            # screen is y=0, and the bottom is y=settings.screen_height. So, to go up,
+            # we need to have a negative y velocity
+            x_direction = -1
+            player_y_velocity = -settings.jump_y_velocity
+            player_x_velocity = settings.jump_x_velocity * x_direction
         
-        is_jumping = True
+            is_jumping = True
+
+    if keys[pygame.K_d]:
+        if is_jumping is False:
+            # Jumping means that the player is going up. The top of the 
+            # screen is y=0, and the bottom is y=settings.screen_height. So, to go up,
+            # we need to have a negative y velocity
+            x_direction = 1
+            player_y_velocity = -settings.jump_y_velocity
+            player_x_velocity = settings.jump_x_velocity * x_direction
         
-    else: # the player is jumping
+            is_jumping = True
+        
+    if is_jumping is True: # the player is jumping
         # Update player position. Gravity is always pulling the player down,
         # which is the positive y direction, so we add settings.gravity to the y velocity
         # to make the player go up more slowly. Eventually, the player will have
@@ -72,27 +97,33 @@ while running:
         player.y += player_y_velocity
         player.x += player_x_velocity
         
+        player_x_velocity * 0.95
+        player_y_velocity * 0.95
+        
     # If the player hits one side of the screen or the other, bounce the player
     if player.left <= 0 or player.right >= settings.screen_width:
-        player_x_velocity = -player_x_velocity
+        player_x_velocity = player_x_velocity // -2
         
         # One way to change direction. 
-        x_direction = -x_direction 
+        # x_direction = -x_direction 
         # But this way is more reliable, since it will always be 1 or -1 and dir is tied to velocity
-        x_direction = player_x_velocity // abs(player_x_velocity)
+        # x_direction = player_x_velocity // 2
 
     # If the player hits the top of the screen, bounce the player
     if player.top <= 0:
         player_y_velocity = -player_y_velocity
 
     # If the player hits the ground, stop the player from falling.
-    if player.bottom > settings.screen_height:
-        player.bottom = settings.screen_height
-        player_y_velocity = 0
+    if player.bottom >= settings.screen_height:
+        player_y_velocity = player_y_velocity // -2
         
-        player_x_velocity = 0
+        if abs(player_y_velocity) <= 1:
+            player.bottom = settings.screen_height
+            player_y_velocity = 0
         
-        is_jumping = False
+            player_x_velocity = 0
+        
+            is_jumping = False
 
 
 

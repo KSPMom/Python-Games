@@ -40,12 +40,12 @@ def event_loop():
                 return
 
 class Turtle:
-    def __init__(self, screen, x: int, y: int):
+    def __init__(self, screen, x: int, y: int, color: tuple):
         self.x = x
         self.y = y
         self.screen = screen
         self.angle = 0  # Angle in degrees, starting facing right
-
+        self.color = color
     def forward(self, distance):
         # Calculate new position based on current angle
         radian_angle = math.radians(self.angle)
@@ -62,7 +62,7 @@ class Turtle:
         self.y -= dy
 
         # Draw line to the new position
-        pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
+        pygame.draw.line(self.screen, self.color, (start_x, start_y), (self.x, self.y), 2)
 
     def left(self, angle):
         # Turn left by adjusting the angle counterclockwise
@@ -84,7 +84,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 
 screen.fill(white)
-turtle = Turtle(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
+turtle = Turtle(screen, screen.get_width() // 2, screen.get_height() // 2, (22, 99, 142))  # Start at the center of the screen
 
 # Draw a square using turtle-style commands
 for _ in range(4):
